@@ -1,9 +1,6 @@
 package com.recosoft.geradorloteria.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,8 +9,13 @@ public class Aposta {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @OneToOne
+    @JoinColumn(name = "loteria")
     private Loteria loteria;
-    List<Integer> numerosApostados;
+
+    @ElementCollection
+    private List<Integer> numerosApostados;
     LocalDateTime dataDaAposta;
 
     public long getId() {

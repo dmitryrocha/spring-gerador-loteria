@@ -1,9 +1,9 @@
 package com.recosoft.geradorloteria.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,6 +15,8 @@ public class Jogador {
     private String username;
     private String password;
 
+    @OneToMany
+    @Fetch(FetchMode.SELECT)
     private List<Aposta> apostas;
 
     public long getId() {
