@@ -1,5 +1,6 @@
 package com.recosoft.geradorloteria.service;
 
+import com.recosoft.geradorloteria.dto.LoteriaCreateDto;
 import com.recosoft.geradorloteria.exception.LoteriaNameNullException;
 import com.recosoft.geradorloteria.exception.LoteriaNegativeNumberException;
 import com.recosoft.geradorloteria.exception.LoteriaNotFoundException;
@@ -33,7 +34,29 @@ public class LoteriaService {
         return repository.save(loteriaCreate);
     }
 
+    @Transactional
+    public void delete(Long id) {
+        findById(id);
+        repository.deleteById(id);
+    }
+
+    @Transactional
     public List<Loteria> findAll() {
         return repository.findAll();
+    }
+
+    @Transactional
+    public Loteria update(Long id, Loteria loteriaCreate) {
+        Loteria loteria = findById(id);
+        if(loteriaCreate.getNome() != null && !loteriaCreate.getNome().equals(""))
+            loteria.setNome(loteriaCreate.getNome());
+        if(loteriaCreate.getQtdNumeros() > 0)
+            loteria.setQtdNumeros(loteriaCreate.getQtdNumeros());
+        if(loteriaCreate.getMenorNumero() > -1)
+            loteria.setMenorNumero(loteriaCreate.getMenorNumero());
+        if(loteriaCreate.getMaiorNumero() > loteriaCreate.getMenorNumero())
+            loteria.setMaiorNumero(loteriaCreate.getMaiorNumero());
+
+        return repository.save(loteria);
     }
 }
