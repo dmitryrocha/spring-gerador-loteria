@@ -25,6 +25,7 @@ public class LoteriaService {
         return repository.findById(id).orElseThrow(() -> new LoteriaNotFoundException(id));
     }
 
+    @Transactional
     public Loteria create(Loteria loteriaCreate) {
         if(loteriaCreate.getNome() == null)
             throw new LoteriaNameNullException();
